@@ -39,6 +39,10 @@ class YamlConfigServiceProvider implements ServiceProviderInterface
         $config = Yaml::parse(file_get_contents($this->file));
 
         if (is_array($config)) {
+            if (isset($config['parameters']) && is_array($config['parameters'])) {
+                $config = $config['parameters'];
+            }
+
             $this->importSearch($config, $app);
 
             if (isset($app['config']) && is_array($app['config'])) {
